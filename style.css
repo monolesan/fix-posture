@@ -1,0 +1,262 @@
+/* SHADOWS */
+.left_shadow {
+  box-shadow: -6px 4px 0px rgba(0, 0, 0, 0.54);
+}
+
+.left_shadow:active {
+  box-shadow: -3px 3px 0px rgba(0, 0, 0, 0.54);
+}
+
+.right_shadow {
+  box-shadow: 5px 4px 0px rgba(0, 0, 0, 0.54);
+}
+
+.right_shadow:active {
+  box-shadow: 3px 3px 0px rgba(0, 0, 0, 0.54);
+}
+
+/* CARD SETTTTTTINGS */
+.pink {
+  background: #FDEAFF;
+}
+
+.yellow {
+  background: #FFF96C;
+}
+
+.card {
+  border: 3px solid #000000;
+  padding: 24px 30px 20px 36px;
+  margin-bottom: 1em;
+  max-width: 900px;
+  
+  /* font */
+  font-family: Poppins;
+  font-style: italic;
+  font-weight: 500;
+  font-size: 25px;
+  line-height: 37px;
+}
+
+.textblock {
+  padding: 24px 15px 20px 20px;
+  margin-bottom: 0.5em;
+  max-width: 900px;
+/*   max-height: 400px; */
+  
+  font-family: Poppins;
+  font-weight: 500;
+  font-size: 25px;
+  line-height: 37px;
+}
+
+.code {
+  border: 3px solid #000000;
+  padding: 16px 16px 16px 24px;
+  max-width: 900px;
+  
+  font-family: 'VT323', monospace;
+  font-size: 25px;
+}
+
+/* ADDITIONAL CARD SETTINGS */
+.right_align {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.double_cards {
+  display: flex;
+  justify-content: space-between;
+}
+
+.small {
+  max-width: 378px;
+/*   max-height: 100px; */
+}
+
+.middle {
+  max-width: 476px;
+  max-height: 250px;
+}
+
+.code_explain {
+  border-bottom: thick solid red;
+}
+
+.comment {
+  color: gray;
+}
+
+button {
+  border: 4px solid #000000;
+  padding: 0px 48px 0px 48px;
+  box-sizing: border-box;
+  
+  /* font */
+  font-family: Poppins;
+  font-style: italic;
+  font-weight: 900;
+  font-size: 25px;
+  line-height: 37px;
+  
+  /* identical to box height */
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+
+button: active {
+  outline: none;
+}
+
+button:focus {
+  outline: none;
+}
+
+a {
+  border: 4px solid #000000;
+  box-sizing: border-box;
+  
+  /* font */
+  font-family: Poppins;
+  font-style: italic;
+  font-weight: 500;
+  font-size: 25px;
+  line-height: 37px;
+  
+  color: black;
+  text-decoration: none;
+}
+
+a:hover, button:hover {
+/*   background: #F064FF; */
+  cursor: pointer;
+  background: red;
+}
+
+.a_righttext {
+  padding: 0px 4px 0px 12px;
+}
+
+.a_lefttext {
+  padding: 0px 12px 0px 4px;
+}
+
+ul {
+/*   list-style-type: hiragana-iroha; */
+  list-style-type: katakana;
+}
+
+/* SECTION NAME */
+h1 {
+  font-family: Poppins;
+  font-style: italic;
+  font-weight: 900;
+  font-size: 50px;
+  line-height: 75px;
+
+  color: #FDEAFF;
+
+  -webkit-text-stroke: 3px black;
+  
+   margin: 0 0 20px 40px;
+}
+
+/* SMALL BLACK HEADER */
+h2 {
+  font-family: Poppins;
+  font-style: italic;
+  font-weight: 900;
+  font-size: 30px;
+  line-height: 37px;
+  padding: 0;
+  margin: 0;
+}
+
+img {
+  margin-bottom: 24px;
+  padding: 0 20px 0 20px;
+}
+
+.design_img {
+  max-width: 900px;
+}
+
+/* This is very hard code to hide video under page content */
+#videoContainer {
+  position: absolute;
+  z-index: 1;
+  top:0;
+  left:0;
+}
+
+#containerforcontainer{
+  position: absolute;
+  z-index: 20;
+  top:0;
+  left:0;
+  width: 100%;
+  background: white;
+}
+
+#container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  color: black;
+}
+
+/* VIP THINGS THAT HAVE ID */
+#name_img {
+  display: flex;
+  align-content: space-between;
+}
+
+#descriptionText p {
+  margin-bottom: 0;
+}
+
+#startbuttonCont {
+  padding-top: 25px;
+}
+
+#creationprocessHeader {
+  margin-left: 20px;
+}
+
+#firstDesignSection {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+#firstCodeSection {
+  margin-top: 40px;
+}
+
+#solution {
+  max-height: 400px;
+  filter: blur(1px);
+}
+
+@media only screen and (max-width: 810px) {
+  .double_cards {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .design_img {
+    max-width: 600px;
+    min-width: 200px;
+  }
+  
+  #name_img img {
+    max-width: 220px;
+  }
+  
+  body {
+    font-size: 18px;
+  }
+}
