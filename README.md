@@ -7,7 +7,11 @@ Made with TensorFlow.js PoseNet model, ml5.js and p5.js.
 * posenet.js is a part with A.I.
 * script.js is a file with UI tricks
 
-Made by me (be monolesan!!!)
+Made by me (by monolesan!!!)
+My links:
+* instagram: https://www.instagram.com/monolesan/
+* twitter: https://twitter.com/monolesan
+* my cooooooooool website that I made with TensorFlow.js Facemesh model: https://monolesan.com/
 
 Project's website: https://fix-posture.glitch.me/
-===========
+-----
