@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Fix posture</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link id="favicon" rel="icon" href="https://cdn.glitch.com/ec7ef02b-8dc9-4e3b-92c9-82124d3c2d83%2Ffav.png?v=1567672040061">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:400,500i,900i|VT323&display=swap" rel="stylesheet">
+    
+    <!-- import the webpage's stylesheet -->
+    <link rel="stylesheet" href="/style.css">
+    
+    <!-- load p5.js -->
+    <!-- We use p5.js to get access to the webcamera and use canvas easier -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.3/p5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.3/addons/p5.dom.min.js"></script>
+    
+    <!-- load ml5.js -->
+    <!-- We use ml5.js because of simple syntax. Simple syntax forever. <3 -->
+    <script src="https://unpkg.com/ml5@0.2.3/dist/ml5.min.js" type="text/javascript"></script>
+    
+    <!-- Our logic is here -->
+    <script src="/posenet.js"></script>
+    <!-- import the webpage's javascript file -->
+    <script src="/script.js" defer></script>
+  </head>  
+  <body>
+    <div id="containerforcontainer">
+    <div id="container">
+    <div id="name_img">
+     <img src="https://cdn.glitch.com/ec7ef02b-8dc9-4e3b-92c9-82124d3c2d83%2Fheader.svg?v=1567505801155">
+     <img src="https://cdn.glitch.com/ec7ef02b-8dc9-4e3b-92c9-82124d3c2d83%2Fheader.svg?v=1567505801155">
+     <img src="https://cdn.glitch.com/ec7ef02b-8dc9-4e3b-92c9-82124d3c2d83%2Fheader.svg?v=1567505801155">
+    </div>
+    <div id="head">
+      <div class="card pink left_shadow ">
+        <div id="descriptionText">
+          <h2>
+            What is it?
+          </h2>
+          <p>
+            This experiment blurs your screen when you keep not correct posture. To try it, you need to allow camera access. It doesn’t stole your data. <span id="reminderText">START KEEPING GOOD POSTURE BEFORE START.</span>
+          </p>
+        </div>
+        <div id="startbuttonCont" onmouseover="reminder()" onmouseout="reminderOff()" class="right_align">
+          <button class="yellow right_shadow" onclick="start()" id="startbutton">
+            start
+          </button>
+        </div>
+      </div>
+      
+      <div class="double_cards">
+        <div>
+          <div class="card small yellow right_shadow">
+            <p>
+              Made by <a class="pink a_lefttext right_shadow" target="_blank" href="https://twitter.com/@monolesan">@monolesan</a>
+            </p>
+          </div>
+            <img id="creationprocessHeader" src="https://cdn.glitch.com/ec7ef02b-8dc9-4e3b-92c9-82124d3c2d83%2Fcreationprocess.svg?v=1567557912850">
+        </div>
+         <div class="card middle yellow left_shadow">
+           <h2>
+             Project links
+           </h2>
+          <p>
+            <a class="pink a_righttext left_shadow" target="_blank" href="https://www.figma.com/file/hvYOl9g4oO2UaTpVOqRwcF/AI-experiments-by-me-Good-posture?node-id=0%3A1">Design in Figma</a> — look at detailed process #OpenDesign
+          </p>
+          <p>
+            <a class="pink a_righttext left_shadow" target="_blank" href="https://glitch.com/~fix-posture">Code on Glitch</a> — remix and create your own stuff
+          </p>
+        </div>
+      </div>
+      
+      <div id="firstDesignSection">
+        <h1>
+          design: exploration&ideation
+        </h1>
+      </div>
+<!--         problem and why it's important -->
+      <div class="double_cards">
+        <div class="card middle pink right_shadow" style="padding-right: 0px;">
+          <h2>
+            Problem
+          </h2>
+          <p>
+            People don’t keep good posture sitting in front of computer
+          </p>
+          <p>
+            ✰ア-ア-ア 亀
+          </p>
+        </div>
+        <div class="textblock small">
+          <h2>
+            Why it's important?
+          </h2>
+          <p>
+            Poor posture is cause back pain, harder breathe, wear away at spine and other diseases.
+          </p>
+        </div>
+      </div>
+<!--       good and bad posture -->
+      <div class="double_cards">
+        <div class="textblock">
+          <h2>
+             What is correct posture?
+          </h2>
+          <ul>
+            <li>Screen on eye level</li>
+            <li>Thighs parallel to floor</li>
+            <li>Feet touches floor</li>
+            <li>Elbows close to your body</li>
+            <li>Shoulders aren’t rounded</li>
+            <li>Your back is fully supported</li>
+          </ul>
+        </div>
+        <div class="textblock">
+          <h2>
+             What's bad posture?
+          </h2>
+          <ul>
+            <li>Legs on table/chair</li>
+            <li>Body leans towards a screen</li>
+            <li>Cross-legged sitting</li>
+            <li>Lean on one hand</li>
+            <li>Arm on face</li>
+            <li>Other strange poses</li>
+          </ul>
+        </div>
+      </div>
+      <div class="textblock">
+        <h2>
+          Where and when do people use computer?
+        </h2>
+        <ul>
+          <li>While work at office/public places/home</li>
+          <li>While studying at university/school/etc.</li>
+          <li>Having fun</li>
+          <li>Other situations that I can't come up with</li>
+        </ul>
+      </div>
+<!--       how and why people keep not good posture????? -->
+        <div class="textblock">
+          <h2>
+             Why do people keep not correct posture?
+          </h2>
+          <ul>
+            <li>Work place isn’t comfortable</li>
+            <li>The back muscles aren’t trained</li>
+            <li>Healthy problems</li>
+            <li>Habit to keep not correct posture</li>
+            <li>Human doesn’t care</li>
+            <li>Human doesn’t know they keep not correct posture</li>
+          </ul>
+        </div>
+        <div class="textblock">
+          <h2>
+             How to keep correct posture? (if it’s not health problem)
+          </h2>
+          <ul>
+            <li>Train the back muscles</li>
+            <li>Make your work place comfortable for your body</li>
+            <li>Control your posture</li>
+            <li>Sleep in correct pose on correct mattress with pillows</li>
+          </ul>
+        </div>
+<!--       ideas -->
+      <div class="card pink left_shadow">
+        <h2>
+          Ideas
+        </h2>
+        <ul>
+          <li>Camera detects human’s posture and alert when the posture is bad</li>
+          <li>Reminder to check the posture every hour</li>
+          <li>Sticker on a computer that reminds to keep good posture</li>
+          <li>Chair for correct posture</li>
+          <li>Posture corrector</li>
+          <li>Cyber suit that detects position of your body (even your legs !!)</li>
+        </ul>
+      </div>
+<!--       why it's not the best solution and solution -->
+      <div class="double_cards">
+        <div class="textblock middle">
+          <h2>
+            Why isn’t solution the best?
+          </h2>
+          <p>
+            Good posture is when all body keeps correct position. Camera tracks only top of body, it doesn’t track legs. But it’s still fine to remind about posture. The best solution is a cyber suit controls all body.
+          </p>
+        </div>
+        <div id="solution" class="card yellow right_shadow small">
+          <h2>
+            Solution
+          </h2>
+          <p>
+            Screen are blured when a human doesn’t keep correct posture
+          </p>
+          <p>
+            ✰ア-ア-ア
+          </p>
+        </div>
+      </div>
+      <div id="firstCodeSection">
+        <h1>
+          code time
+        </h1>
+      </div>
+<!--       how will it work -->
+      <div class="card pink right_shadow">
+        <h2>
+          What the program is used?
+        </h2>
+        <p>
+          <a class="yellow a_righttext left_shadow" target="_blank" href="https://www.tensorflow.org/js/">TensorFlow.js PoseNet model</a> detects our body parts ＜3
+        </p>
+        <p>
+          <a class="yellow a_righttext left_shadow" target="_blank" href="https://p5js.org/">p5.js</a> helps to work with canvas and camera
+        </p>
+        <p>
+          <a class="yellow a_righttext left_shadow" target="_blank" href="https://ml5js.org/">ml5.js</a> for easy work with PoseNet
+        </p>
+        <p>
+          <a class="yellow a_righttext left_shadow" target="_blank" href="https://www.analyticsvidhya.com/blog/2019/06/build-machine-learning-model-in-your-browser-tensorflow-js-deeplearn-js/">Cool guide</a> how to work with everything above if you don't know
+        </p>
+      </div>
+      <div class="textblock">
+        <h2>
+          How to make it work?
+        </h2>
+        <p>
+          At first, I want to repeat that I used TensorFlow.js PoseNet model that tracks body parts and gives an array of parts’ positions (x, y).
+        </p>
+        <p>
+          I had two ways how to track poor posture:
+        </p>
+        <ul>
+          <li>Create a model and teach it understand when a human keeps incorrect position. This variant doesn't request PoseNet.</li>
+          <li>Ask a human to keep a correct posture, get their right position of eyes and shoulders. Then check new positions every second and compare it with first positions. Also, detect arms and legs if it will be in a camera view.</li>
+        </ul>
+        <p>
+          I chose the second one, because it’s easier and faster to do.
+        </p>
+      </div>
+      <div class="textblock">
+        <h2>
+          Details
+        </h2>
+        <p>
+          Let’s imagine logical part of this idea.
+        </p>
+        <p>
+          When a human keeps incorrect posture, positions of eyes and shoulders will decrease (on y). If y value will decrease, a screen will be blurred and vice versa. That’s simple.
+        </p>
+        <p>
+          I drew pistures with incorrect positions:
+        </p>
+      </div>
+      <img class="design_img" src="https://cdn.glitch.com/ec7ef02b-8dc9-4e3b-92c9-82124d3c2d83%2Fpictures.png?v=1567945516091">
+
+<!--   start with bluuuurrrrrrrrrrrr -->
+      <div class="textblock">
+        <h2>
+          Blurrrrrrrrrrrrrrrrrrrr me baby please
+        </h2>
+        <p>
+          I started code with two functions. One <span onmouseover="highlightCode(this.id)" onmouseout="removeHighlight(this.id)" id="blurs">of them <span class="code_explain">blurs</span></span> the screen, the second one <span onmouseover="highlightCode(this.id)" onmouseout="removeHighlight(this.id)" id="removesblur" class="code_explain">removes blur</span>:
+        </p>
+      </div>
+      <div class="code left_shadow" style="margin-bottom: 1em">
+        <p>
+          <span id="blurs_code">function blurScreen() {</br>
+              document.body.style.filter = 'blur(10px)';</br>
+              document.body.style.transition= '0.9s';</br>
+          }</br></span>
+          </br>
+          <span id="removesblur_code">function removeBlur() {</br>
+              document.body.style.filter = 'blur(0px)';</br>
+          }</span>
+        </p>
+      </div>
+<!-- it works lise I want -->
+      <div class="textblock">
+        <h2>
+          It works like I wanted but doesn’t like I devised
+        </h2>
+        <p>
+          The next step was to detect all needed body parts: right and left eyes, shoulders, wrists, knees and ankles. I did it, but there was a not tiny problem. Sometimes, camera detected wallpapers, shoulders and my right breast as ankles or knees, hahaha. .-. 
+        </p>
+        <p>
+          So, it worked unstable and I decided to start with eyes detection.
+        </p>
+        <p>
+          New goal was — get the first right eye position when the human is sitting with good posture, then track eye when the human moves and check the difference between current eye position and default position. And to do it with left eye.
+        </p>
+      </div>
+      <div class="code right_shadow">
+        <p> 
+          <span class="comment">//Position of eyes after a human has pressed the button “start”. Default position.</span></br>
+        while (defaultRightEyePosition.length < 1) {</br>
+          defaultRightEyePosition.push(rightEye.y);</br>
+        }
+        </p>
+        <p>
+          <span class="comment">//Compare default position with current position. If the difference more than 15, it means a person doesn't keep good posture and program calls the function that blurs screen.</span></br>
+          if (Math.abs(rightEye.y - defaultRightEyePosition[0]) > 15) {</br>
+            blurScreen();</br>
+          }
+        </p>
+        <p>
+          <span class="comment">//If the difference less than 15, it means a person is sitting with correct posture.</span></br>
+          if (Math.abs(rightEye.y - defaultRightEyePosition[0]) < 15) {</br>
+            removeBlur();</br>
+          }</br>
+        </p>
+        </div>
+        <div class="textblock">
+          <p>
+             Cool! Despite the fact that it tracks only right eye, it works well like a monster in a dark forest where everyone wants to eat you!
+          </p>
+          <p>
+              You can believe me or maybe don’t, but there is all code we need for this. I decided it’s enough to track only one eye for the experiment. So, let’s design!
+          </p>
+        </div>
+<!--     VISUAL DESIGN -->
+      <div>
+         <h1>
+          vissssual design
+        </h1>
+<!--         MAPS -->
+        <div class="textblock"> 
+          <h2>
+            Maps
+          </h2>
+          <p>
+            I drew two shemes. The first is called “AI Journey Map”, it describes program process. The second one is User Journey Map.
+          </p>
+        </div>
+        <img class="design_img" src="https://cdn.glitch.com/ec7ef02b-8dc9-4e3b-92c9-82124d3c2d83%2Fhow%20does%20it%20work_%20ai%20journey%20map.png?v=1567836124377">
+        <div>        
+          <img class="design_img" src="https://cdn.glitch.com/ec7ef02b-8dc9-4e3b-92c9-82124d3c2d83%2FHuman%20journey%20map.png?v=1567836124735">
+        </div>
+<!--         goals -->
+        <div class="textblock">
+          <h2>
+            Site goals
+          </h2>
+          <ul>
+            <li>Show experiment</li>
+            <li>Share work process</li>
+          </ul>
+        </div>
+<!--         DESCRIPTION WIIIIINNNDOOOOWWWWWWWW -->
+        <div class="textblock">
+          <h2>
+            Description window
+          </h2>
+          <p>
+            My visual design was started with the description window. I just drew a pink rectangle, liked it and decided to use rectangles for important information.
+          </p>
+          <p>
+            But before designing the desciption window, I highlighted moments I need to show here.
+          </p>
+        </div>
+<!--         what will be in the window -->
+        <div class="textblock">
+          <h2>
+            What should be in the window?
+          </h2>
+          <ul>
+            <li>What is it?</li>
+            <li>How does it work?</li>
+            <li>It doesn't stole personal information</li>
+            <li>Reminder: keep a correct posture before start</li>
+            <li>It can load for a long time</li>
+            <li>Maybe “Made by”?</li>
+          </ul>
+          <p>
+            Eventually I considered that some points aren't important.
+          </p>
+        </div>
+<!--         versions of window -->
+        <div class="textblock">
+          <h2>
+            Version 31.10.2077
+          </h2>
+          <p>
+            I had a few versions of how it can look:
+          </p>
+        </div>
+<!--         IMAGE -->
+        <img class="design_img" src="https://cdn.glitch.com/ec7ef02b-8dc9-4e3b-92c9-82124d3c2d83%2Fshort%20description%20idea.png?v=1567839628766">
+<!--         KEEP POSTURE PLEASE -->
+        <div class="textblock">
+          <h2>
+            How to make a human to keep good posture before starrrt?
+          </h2>
+          <p>
+            Evrything above looks great, of course. But I needed to make reminder more notable. I must make sure a human keeps good posture before start. There're some sketches:
+          </p>
+        </div>
+<!--         IMG -->
+        <img class="design_img" src="https://cdn.glitch.com/ec7ef02b-8dc9-4e3b-92c9-82124d3c2d83%2Ffix%20posture.png?v=1567842517612">
+<!--         links -->
+        <div class="textblock">
+          <h2>
+            Links
+          </h2>
+          <p>
+            I made rectangle links like cards and buttons with shadows (shadows are my best friends in this project). Also, I thought about accent colors for mouse on hover. There were ideas to make a link's hover color brighter than initial color or use bright pink and blue. I chose bright red.
+          </p>
+          <p>
+            While working on link window, I decided to put header here.
+          </p>
+        </div>
+<!--         img -->
+        <img class="design_img" src="https://cdn.glitch.com/ec7ef02b-8dc9-4e3b-92c9-82124d3c2d83%2Flinks.png?v=1567928470207">
+<!--         HEADERS -->
+        <div class="textblock">
+          <h2>
+            HEADers
+          </h2>
+          <p>
+            I wanted to create something special, not just black big text. I experimented with color of shadows and stroke.
+          </p>
+          <p>
+            The arrow near “Creation process” was drawn accidentally.
+          </p>
+        </div>
+<!--         img -->
+        <img class="design_img" src="https://cdn.glitch.com/ec7ef02b-8dc9-4e3b-92c9-82124d3c2d83%2Fheadersss.png?v=1567928475635">
+<!--          LISTSSSSSS -->
+        <div class="textblock">
+          <h2>
+            You are in my LIST
+          </h2>
+          <p>
+            I experimented with link shape and decided to choose the first variant. But at the last moment, I changed my decision. When I was coding lists, I was surfing Internet how to put an image instead of default list-style-type and found that I can use interesting symbols, letters for it. Of course, I chose Japanese katakana.
+          </p>
+        </div>
+<!--         IMGGGG -->
+        <img class="design_img" src="https://cdn.glitch.com/ec7ef02b-8dc9-4e3b-92c9-82124d3c2d83%2Flists.png?v=1567928469880">
+<!--         CODE WINDOW BABE -->
+        <div class="textblock">
+          <h2>
+            Code window
+          </h2>
+          <p>
+            I picked rectangle for code window. There were variants with pink shadow and text or with yellow rectangle, they are too bright. Of course, for this window I used “very coder” (beautiful and pixel) font — VT323.
+          </p>
+          <p>
+            Haha, I just got a funny idea to use something like matrix digital rain instead of white windows with black border.
+          </p>
+        </div>
+<!--         img -->
+        <img class="design_img" src="https://cdn.glitch.com/ec7ef02b-8dc9-4e3b-92c9-82124d3c2d83%2Fcode%20window.png?v=1567928470028">
+<!--         DOUBLE EXPERIMENT -->
+        <div class="textblock">
+          <h2>
+            An UX experiment is in AI experiment. DOUBLE EXPERIMENT!
+          </h2>
+          <p>
+            I just came up with a case where you explain code and a human has ability to follow in code what are you talking about.
+          </p>
+        </div>
+<!--         GIFFF -->
+        <img class="design_img" src="https://cdn.glitch.com/ec7ef02b-8dc9-4e3b-92c9-82124d3c2d83%2Fexperiment.gif?v=1567851375440">
+<!--         little design system -->
+        <div class="textblock">
+          <h2>
+            My little design system
+          </h2>
+          <p>
+            In process, I collected the design system for this project.
+          </p>
+        </div>
+<!--         img -->
+        <img class="design_img" src="https://cdn.glitch.com/ec7ef02b-8dc9-4e3b-92c9-82124d3c2d83%2Flittle%20design%20system.png?v=1567854170317">
+          <div class="textblock">
+            <h2>
+               It's not my one experiment. Check other. c;
+            </h2>
+            <p>
+              <a class="pink a_righttext left_shadow" target="_blank" href="https://glitch.com/~make-me-big">Make me big</a> — changes font based on your position in front of your computer. Made with TensorFlow.js PoseNet model.
+            </p>
+            <p>
+              <a class="pink a_righttext left_shadow" target="_blank" href="https://glitch.com/~smile-and-like">Smile and like</a> — a fictional social network where you need smile to like something. Made with face-api.js.
+            </p>
+            <p>
+              <a class="pink a_righttext left_shadow" target="_blank" href="https://glitch.com/~mood-ai-design">Mood-AI-Design</a> — changes design based on your emotions.  Made with face-api.js.
+            </p>
+          </div>
+          <div class="card middle left_shadow yellow">
+            <h2>
+              Thanks for reading. 🐢
+            </h2>
+            <p>
+              Don't forget to create something by yourself and check open links with design and code. They are in the beggining. c:
+            </p>
+          </div>
+      </div>
+    </div>
+    </div>
+</div>
+    
+<!--     IT'S VERY IMPORTANT PART. IT'S OUR CANVAS AND CAMERA -->
+    <div id="videoContainer">
+      
+    </div>
+  </body>
+</html>
