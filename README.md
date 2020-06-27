@@ -15,3 +15,5 @@ My links:
 
 Project's website: https://fix-posture.glitch.me/
 -----
+Code on Glitch: https://glitch.com/~fix-posture
+Design on Figma: https://www.figma.com/file/hvYOl9g4oO2UaTpVOqRwcF/AI-experiments-by-me-Good-posture?node-id=0%3A1
