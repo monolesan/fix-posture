@@ -1,6 +1,13 @@
 let video;
 let poseNet;
-let poses = [];
+
+/**
+ * TODO - Make this configurable depending on the desired trade off between
+ * response time and CPU usage.
+ */
+let poseInterval = 0.25;
+
+let postIntervalId;
 var started = false;
 
 function setup() {
@@ -8,17 +15,26 @@ function setup() {
   canvas.parent('videoContainer');
 
   // Video capture 
-  video = createCapture(VIDEO);
-  video.size(width, height);
+  video = createCapture({
+    video: {
+      mandatory: {
+        minWidth: width,
+        minHeight: height
+      },
+      optional: [{ maxFrameRate: 1/poseInterval }]
+    },
+    audio: false
+  });
   
   if (video == true) {console.log('true');}
 
   // Create a new poseNet method with a single detection
-  poseNet = ml5.poseNet(video, modelReady);
-  // This sets up an event that fills the global variable "poses"
-  // with an array every time new poses are detected
+  poseNet = ml5.poseNet(modelReady);
+  
+  // Listen for 'pose' events
   poseNet.on('pose', function(results) {
-    poses = results;
+    image(video, 0, 0, width, height);
+    drawEyes(results);
   });
   
   // Hide the video element, and just show the canvas
@@ -32,26 +48,18 @@ function startOrStop() {
   if(!started){
     started = true;
     html = 'stop';
-    loop();
+    poseIntervalId = setInterval(() => {
+      poseNet.singlePose(video)
+    }, poseInterval*1000)
   }
   else{
     removeBlur();
     started = false;
     html = 'start';
-    noLoop();
+    clearInterval(poseIntervalId)
   }
 
   select('#start-or-stop-button').html(html);
-}
-
-function draw() {
-  if(started){
-    //We use white picture as background. You can comment this line and see what will happen. It's cool glitch effect.
-    // image(whitePicture, 0, 0, width, height);
-    image(video, 0, 0, width, height);
-
-    drawEyes();
-  }
 }
 
 function modelReady(){
@@ -62,7 +70,7 @@ var rightEye, leftEye, rightShoulder, leftShoulder, rightWrist, leftWrist, right
     leftKnee, rightAnkle, leftAnkle, distanceEye, defaultRightEyePosition = [],
     defaultLeftEyePosition = [];
 // A function to draw ellipses over the detected keypoints
-function drawEyes()  {
+function drawEyes(poses)  {
   // Loop through all the poses detected
   for (let i = 0; i < poses.length; i++) {
     // For each pose detected, loop through all the keypoints
