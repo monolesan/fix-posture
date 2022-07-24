@@ -27,20 +27,21 @@ function setup() {
 }
 
 // This function turns on AI
-function start() {
-  select('#startbutton').html('stop')
-  document.getElementById('startbutton').addEventListener('click', stop);
-  started = true;
-  loop();
-}
+function startOrStop() {
+  let html;
+  if(!started){
+    started = true;
+    html = 'stop';
+    loop();
+  }
+  else{
+    removeBlur();
+    started = false;
+    html = 'start';
+    noLoop();
+  }
 
-// This function stops the experiment
-function stop() {
-  select('#startbutton').html('start')
-  document.getElementById('startbutton').addEventListener('click', start);
-  removeBlur();
-  started = false;
-  noLoop();
+  select('#start-or-stop-button').html(html);
 }
 
 function draw() {
